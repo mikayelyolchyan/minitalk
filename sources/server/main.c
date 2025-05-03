@@ -1,9 +1,10 @@
 #include "../../includes/headers/minitalk.h"
 
-int	main(int argc, char **argv)
+int	main(void)
 {
-	(void)argc;
-	(void)argv;
-		ft_printf("Server\n");
+	pid_t pid;
+
+	pid = getpid();
+	ft_printf("Server pid: %d\n", pid);
 	return (0);
 }
