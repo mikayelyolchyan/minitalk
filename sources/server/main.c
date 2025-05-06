@@ -6,13 +6,13 @@
 /*   By: miyolchy <miyolchy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 21:35:16 by miyolchy          #+#    #+#             */
-/*   Updated: 2025/05/07 00:29:59 by miyolchy         ###   ########.fr       */
+/*   Updated: 2025/05/07 00:44:27 by miyolchy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/headers/minitalk.h"
 
-static volatile t_state	g_state = {0, 0, 0};
+static volatile t_state	g_state = {0, 0};
 
 static void	signal_handler(int signal, siginfo_t *info, void *ucontext)
 {
@@ -25,8 +25,6 @@ static void	signal_handler(int signal, siginfo_t *info, void *ucontext)
 	if (g_state.bit_count == 8)
 	{
 		ft_printf("%c", g_state.current_char);
-		if (g_state.current_char == 0)
-			g_state.client_pid = 0;
 		g_state.current_char = 0;
 		g_state.bit_count = 0;
 	}
