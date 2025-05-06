@@ -10,7 +10,6 @@
 
 typedef struct s_state
 {
-	pid_t	client_pid;
 	char	current_char;
 	int		bit_count;
 }	t_state;
