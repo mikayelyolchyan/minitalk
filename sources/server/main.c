@@ -6,7 +6,7 @@
 /*   By: miyolchy <miyolchy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 21:35:16 by miyolchy          #+#    #+#             */
-/*   Updated: 2025/05/10 20:49:47 by miyolchy         ###   ########.fr       */
+/*   Updated: 2025/05/10 22:42:56 by miyolchy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ static void	signal_handler(int signal, siginfo_t *info, void *ucontext)
 		current_char = 0;
 		bit_count = 0;
 	}
+	kill(info->si_pid, SIGUSR2);
 }
 
 int	main(int argc, char **argv)
