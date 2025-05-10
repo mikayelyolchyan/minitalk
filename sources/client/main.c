@@ -6,11 +6,13 @@
 /*   By: miyolchy <miyolchy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 21:35:21 by miyolchy          #+#    #+#             */
-/*   Updated: 2025/05/10 20:48:59 by miyolchy         ###   ########.fr       */
+/*   Updated: 2025/05/10 22:49:49 by miyolchy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/headers/minitalk.h"
+
+static int	bit_sent;
 
 static void	signal_handler(int signal, siginfo_t *info, void *ucontext)
 {
@@ -19,6 +21,10 @@ static void	signal_handler(int signal, siginfo_t *info, void *ucontext)
 	if (signal == SIGUSR1)
 	{
 		ft_printf("Youre messege is sent\n");
+	}
+	if (signal == SIGUSR2)
+	{
+		bit_sent = 1;
 	}
 }
 
@@ -29,11 +35,13 @@ void	send_char_bit_by_bit(int server_pid, unsigned char c)
 	i = 7;
 	while (i >= 0)
 	{
+		bit_sent = 0;
 		if (((c >> i) & 1) == 1)
 			kill(server_pid, SIGUSR1);
 		else
 			kill(server_pid, SIGUSR2);
-		usleep(500);
+		while (bit_sent == 0)
+			pause();
 		i--;
 	}
 }
@@ -44,7 +52,6 @@ void	send_string_bit_by_bit(int server_pid, const char *str)
 	{
 		send_char_bit_by_bit(server_pid, (unsigned char)*str);
 		str++;
-		usleep(500);
 	}
 }
 
@@ -68,6 +75,8 @@ int	main(int argc, char **argv)
 	sa.sa_sigaction = signal_handler;
 	sigemptyset(&sa.sa_mask);
 	sigaction(SIGUSR1, &sa, NULL);
+	sigaction(SIGUSR2, &sa, NULL);
+	
 	send_string_bit_by_bit(server_pid, argv[2]);
 	send_char_bit_by_bit(server_pid, '\0');
 	send_char_bit_by_bit(server_pid, '\n');
