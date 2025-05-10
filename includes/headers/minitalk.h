@@ -8,10 +8,4 @@
 # include "unistd.h"
 # include <sys/types.h>
 
-typedef struct s_state
-{
-	char	current_char;
-	int		bit_count;
-}	t_state;
-
 #endif
