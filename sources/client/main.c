@@ -6,13 +6,13 @@
 /*   By: miyolchy <miyolchy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 21:35:21 by miyolchy          #+#    #+#             */
-/*   Updated: 2025/05/10 22:49:49 by miyolchy         ###   ########.fr       */
+/*   Updated: 2025/05/10 23:41:14 by miyolchy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/headers/minitalk.h"
 
-static int	bit_sent;
+static int	g_bit_sent;
 
 static void	signal_handler(int signal, siginfo_t *info, void *ucontext)
 {
@@ -24,7 +24,7 @@ static void	signal_handler(int signal, siginfo_t *info, void *ucontext)
 	}
 	if (signal == SIGUSR2)
 	{
-		bit_sent = 1;
+		g_bit_sent = 1;
 	}
 }
 
@@ -35,14 +35,15 @@ void	send_char_bit_by_bit(int server_pid, unsigned char c)
 	i = 7;
 	while (i >= 0)
 	{
-		bit_sent = 0;
+		g_bit_sent = 0;
 		if (((c >> i) & 1) == 1)
 			kill(server_pid, SIGUSR1);
 		else
 			kill(server_pid, SIGUSR2);
-		while (bit_sent == 0)
-			pause();
 		i--;
+		usleep(100);
+		while (g_bit_sent == 0)
+			pause();
 	}
 }
 
@@ -76,7 +77,6 @@ int	main(int argc, char **argv)
 	sigemptyset(&sa.sa_mask);
 	sigaction(SIGUSR1, &sa, NULL);
 	sigaction(SIGUSR2, &sa, NULL);
-	
 	send_string_bit_by_bit(server_pid, argv[2]);
 	send_char_bit_by_bit(server_pid, '\0');
 	send_char_bit_by_bit(server_pid, '\n');
