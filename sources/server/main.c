@@ -6,7 +6,7 @@
 /*   By: miyolchy <miyolchy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 21:35:16 by miyolchy          #+#    #+#             */
-/*   Updated: 2025/05/10 20:33:29 by miyolchy         ###   ########.fr       */
+/*   Updated: 2025/05/10 20:49:47 by miyolchy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,14 +35,14 @@ static void	signal_handler(int signal, siginfo_t *info, void *ucontext)
 
 int	main(int argc, char **argv)
 {
-	(void)argv;
-	struct sigaction sa;
+	struct sigaction	sa;
 
+	(void)argv;
 	if (argc != 1)
 	{
 		ft_printf("Error: usage ./server\n");
 		return (1);
-	}	
+	}
 	ft_printf("Server PID: %d\n", getpid());
 	sa.sa_sigaction = signal_handler;
 	sa.sa_flags = SA_SIGINFO;

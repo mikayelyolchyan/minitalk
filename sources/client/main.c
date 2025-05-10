@@ -6,7 +6,7 @@
 /*   By: miyolchy <miyolchy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 21:35:21 by miyolchy          #+#    #+#             */
-/*   Updated: 2025/05/10 20:30:11 by miyolchy         ###   ########.fr       */
+/*   Updated: 2025/05/10 20:48:59 by miyolchy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ static void	signal_handler(int signal, siginfo_t *info, void *ucontext)
 {
 	(void)ucontext;
 	(void)info;
-
 	if (signal == SIGUSR1)
 	{
 		ft_printf("Youre messege is sent\n");
