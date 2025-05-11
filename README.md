@@ -23,6 +23,10 @@
 
 ---
 
+<p align="center">
+  <img src="gifs/100000char.gif" width="1600"/>
+</p>
+
 ## 📜 About Project
 
 > 42 School Minitalk project is a simple communication program using UNIX signals. \
